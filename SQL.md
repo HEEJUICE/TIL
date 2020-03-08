@@ -1,7 +1,5 @@
 # SQL
 
----
-
 ## 1. SQL_SELECT
 
 ```sql

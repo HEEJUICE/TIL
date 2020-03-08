@@ -1,12 +1,10 @@
 # REDUX
 
----
-
 ## 1. ACTION
 
 액션 개체는 type 필드를 반드시 가지고 있어야 하며, 이 값을 액션의 이름이라고 생각한다.
 
-```react
+```js
 {
   type: 'ADD_TODO',
     data: {
@@ -23,25 +21,25 @@
 
 ### 액션 생성 함수
 
-```react
+```js
 function addTodo(data) {
   return {
-    type: 'ADD_TODO',
+    type: "ADD_TODO",
     data
-  }
+  };
 }
 
 const changeInput = text => ({
-  type: 'CHANGE_INPUT',
-    text
-})
+  type: "CHANGE_INPUT",
+  text
+});
 ```
 
 어떤 변화를 일으켜야 할 때마다 액션 객체를 만들어야 하는데 매번 액션 객체를 직접 작성하기 번거롭고 만드는 과정에서 실수로 정보를 놓칠 수도 있다. 이러한 일을 방지하기 위해 함수로 만들어서 관리한다.
 
 ##### 리듀서(reducer)
 
-```react
+```js
 const initialState = {
   counter: 1
 };
@@ -69,29 +67,29 @@ function reducer(state = initialState, action) {
 
 스토어의 내장 함수 중 하나. _subscribe_ 함수 안에 리스너 함수를 파라미터로 넣어서 호출해 주면, 이 리스너 함수가 액션이 디스패치되어 상태가 업데이트될 때마다 호출됨.
 
-```react
+```js
 const linstener = () => {
-  console.log('상태가 업데이트됨');
-}
+  console.log("상태가 업데이트됨");
+};
 const unsubscribe = store.subscribe(listenenr);
 unsubscribe(); //추후 구독을 비활성화할 때 함수를 호출
 ```
 
 ## 2. 리액트 없이 쓰는 리덕스
 
-```react
-const TOGGLE_SWITCH = 'TOGGLE_SWITCH';
-const INCREASE = 'INCREASE';
-const DECREASE = 'DECREASE';
+```js
+const TOGGLE_SWITCH = "TOGGLE_SWITCH";
+const INCREASE = "INCREASE";
+const DECREASE = "DECREASE";
 
 const toggleSwitch = () => ({ type: TOGGLE_SWITCH });
 const increase = difference => ({ type: INCREASE, difference });
-const decrease = () => ({ type: DECREASE })
+const decrease = () => ({ type: DECREASE });
 
 const initialState = {
   toggle: false,
   counter: 0
-}
+};
 
 //state가 undefined일 때는 initalState를 기본값으로 사용
 function reducer(state = initalState, action) {
@@ -124,28 +122,28 @@ function reducer(state = initalState, action) {
 
 _createStore_ 함수 사용
 
-```react
-import { createStore } from 'redux';
+```js
+import { createStore } from "redux";
 
 const store = createStore(reducer);
 ```
 
 ### render 함수 만들기
 
-```react
+```js
 const store = createStore(reducer);
 
 const render = () => {
   const state = store.getState(); //현재 상태를 불러옴.
   //토글 처리
   if (state.toggle) {
-    divToggle.classList.add('active');
+    divToggle.classList.add("active");
   } else {
-    divToggle.classList.remove('active')
+    divToggle.classList.remove("active");
   }
   //카운터 처리
   counter.innerText = state.counter;
-}
+};
 ```
 
 ### 구독하기
